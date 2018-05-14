@@ -1,0 +1,48 @@
+.category-title {
+    color: #f2f2f2;
+}
+
+.movie-list {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    clear: both;
+    height: 375px;
+}
+
+.movie-list::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-left, .scroll-right {
+    width: 65px;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .2);
+    outline: none;
+    border: none;
+    transition: transform 1s;
+    cursor: pointer;
+}
+
+.scroll-left img, .scroll-right img {
+    width: 100%;
+    pointer-events: none;
+}
+
+.scroll-left:hover, .scroll-right:hover {
+    transform: scale(1.4);
+}
+
+.scroll-left {
+    float: left;
+    left: 0;
+    z-index: 1;
+}
+
+.scroll-right {
+    float: right;
+    right: 0;
+}
