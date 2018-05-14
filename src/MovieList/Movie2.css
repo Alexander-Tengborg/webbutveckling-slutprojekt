@@ -1,18 +1,10 @@
-.movie-wrapper {
+.movie-wrappert {
     background-color: rgb(60, 60, 60);
     margin: 20px;
     display: table;
 }
 
-.movie-wrapper img {
+.movie-wrappert img {
     transition: width .5s, height .5s, transform .5s;
     display: table-row;
 }
-
-.movie-wrapper img:hover {
-    transform: scale(1.15);
-}
-
-/*.movie-wrapper img:hover {
-    transform: scale(1.1);
-}*/

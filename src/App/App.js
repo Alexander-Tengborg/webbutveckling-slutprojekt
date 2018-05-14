@@ -11,6 +11,7 @@ class App extends Component {
         <MovieList type="top_rated" title="Top Rated" />
         <MovieList type="popular" title="Popular" />
         <MovieList type="upcoming" title="Upcoming" />
+        <div style={{height: '400px'}}></div>
       </div>
     );
   }

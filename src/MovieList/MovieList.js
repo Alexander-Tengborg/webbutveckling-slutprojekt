@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Movie from './Movie.js';
+import Movie2 from './Movie2.js';
+import Movie3 from './Movie3.js';
 import './MovieList.css';
 
 class MovieList extends Component {
@@ -62,17 +64,28 @@ class MovieList extends Component {
         let movieList = "Could not load movies";
 
         if(this.state.movies.results) {
-            movieList = this.state.movies.results.map(data =>
-                <Movie key={data.id} data={data}/>
-            )
+            if(this.props.type == "top_rated") {
+                movieList = this.state.movies.results.map(data =>
+                    <Movie key={data.id} data={data}/>
+                )          
+            } else if(this.props.type == "popular") {
+                movieList = this.state.movies.results.map(data =>
+                    <Movie2 key={data.id} data={data}/>
+                )
+            } else {
+                movieList = this.state.movies.results.map(data =>
+                    <Movie3 key={data.id} data={data}/>
+                )
+            }
         }
 
         return (
             <div>
                 <h1 className="category-title">{this.props.title}</h1>
                 <div className="movie-list" onScroll={this.onScroll}>
-
+                    <button className="scroll-left" onClick={(e) => this.onClick("l", e)} left="true"><img src="left.png" /></button>
                         {movieList}
+                    <button className="scroll-right" onClick={(e) => this.onClick("r", e)} right="true"><img src="right.png" /></button>
                 </div>
             </div>
         );
