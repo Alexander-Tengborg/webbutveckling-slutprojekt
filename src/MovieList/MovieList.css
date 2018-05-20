@@ -4,6 +4,8 @@
 }
 
 .movie-list {
+    margin: auto;
+    width: 98%;
     display: flex;
     align-items: center;
     overflow-x: scroll;

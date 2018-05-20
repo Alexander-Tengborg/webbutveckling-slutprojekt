@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Movie from './Movie.js';
-import Movie2 from './Movie2.js';
-import Movie3 from './Movie3.js';
 import './MovieList.css';
 
 class MovieList extends Component {
@@ -10,12 +8,24 @@ class MovieList extends Component {
 
         this.getMovies = this.getMovies.bind(this);
         this.state = {
-            movies: []
+            movies: [],
+            scrollLeft: 0
         }
         this.getMovies();
 
+        this.onResize = this.onResize.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+
+        this.movieList = React.createRef();
+
+        window.addEventListener("resize", this.onResize);
+
     }
 
+    onResize() {
+        this.movieList.current.scrollLeft = this.state.scrollLeft;
+    }
+    
     getMovies() {
         fetch('https://api.themoviedb.org/3/movie/' + this.props.type + '?api_key=e7c932bbbb81168a709224970c15e1a7&language=en-US&page=1')
             .then((response) => response.json())
@@ -36,26 +46,23 @@ class MovieList extends Component {
             newScroll -= parent.clientWidth;
         }
         parent.scrollBy({left: newScroll, behavior: 'smooth'})
-
     }
 
     onScroll(e) {
-        console.log("scroll");
         let elements = e.target.children;
-        //console.log(elements);
         for(let i = 0; i < elements.length; i++) {
             if(elements[i].tagName.toLowerCase() == "button") {
                 let element = elements[i];
                 if(element.getAttribute("left")) {
                     element.style.left = e.target.scrollLeft + 'px';
-                    if(e.target.scrollLeft == 0) {
+                    if(e.target.scrollLeft == 0 || window.screen.width < 500) {
                         element.style.visibility = "hidden";
                     } else {
                         element.style.visibility = "visible";
                     }
                 } else if(element.getAttribute("right")) {
                     element.style.right = -e.target.scrollLeft + 'px';
-                    if(e.target.scrollLeft >= (e.target.scrollWidth - e.target.offsetWidth - 13)) {
+                    if(e.target.scrollLeft >= (e.target.scrollWidth - e.target.offsetWidth - 13) || window.screen.width < 500) {
                         element.style.visibility = "hidden";
                     } else {
                         element.style.visibility = "visible";
@@ -63,22 +70,23 @@ class MovieList extends Component {
                 }
             }
         }
-        //console.log(e.target.scrollLeft);
+        this.setState({
+            scrollLeft: e.target.scrollLeft
+        });
     }
-
     render() {
         let movieList = "Could not load movies";
 
         if(this.state.movies.results) {
             movieList = this.state.movies.results.map(data =>
-                <Movie key={data.id} data={data}/>
+                <Movie showModal={this.props.showModal} key={data.id} data={data}/>
             )          
         }
 
         return (
             <div>
                 <h1 className="category-title">{this.props.title}</h1>
-                <div className="movie-list" onScroll={this.onScroll}>
+                <div className="movie-list" ref={this.movieList} onScroll={this.onScroll}>
                     <button className="scroll-left" onClick={(e) => this.onClick("l", e)} left="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 20">
                             <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" fill="#f2f2f2" transform="translate(20, 0) scale(-1, 1)"/>

@@ -4,7 +4,6 @@ import './Movie.css';
 class Movie extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.data.backdrop_path);
     }
 
     render() {
@@ -16,10 +15,9 @@ class Movie extends Component {
             <div className="movie-wrapper" style={{backgroundImage: "url("+img_path+")", backgroundSize: "100%", backgroundRepeat: "no-repeat", width: img_width, height: img_height}}>
                 <div className="temp">
                     <div className="moviet">{data.title}</div>
-
                     <p>Release date: {data.release_date}</p>
                     <p>TMDB score: {data.vote_average}</p>
-                    <p>More info</p>
+                    <p onClick={() => this.props.showModal(data.id)}>More info</p>
                     <p>Add to watchlist</p>
                 </div>
             </div>

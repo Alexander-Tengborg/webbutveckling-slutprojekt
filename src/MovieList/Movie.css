@@ -3,10 +3,13 @@
     display: table;
     min-width: 200px;
     transition: .4s;
+    float: left;
 }
 
 .movie-wrapper:hover {
     transform: scale(1.2);
+    /*transform-origin: center right; --- fix this for the movies at the edges*/
+    z-index: 1;
 }
 
 .temp {
@@ -16,6 +19,7 @@
     opacity: 0;
     display: flex;
     flex-direction: column;
+    z-index: 1;
 }
 
 .temp:hover {

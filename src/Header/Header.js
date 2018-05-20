@@ -12,10 +12,6 @@ class Header extends Component {
                     <li>Series</li>
                     <li>My Watchlist</li>
                 </ul>
-                <ul id="temp">
-                    <li>Login</li>
-                    <li>Register</li>
-                </ul>
             </div>
         );
     }
