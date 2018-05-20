@@ -1,18 +1,34 @@
 .movie-wrapper {
-    background-color: rgb(60, 60, 60);
     margin: 20px;
     display: table;
+    min-width: 200px;
+    transition: .4s;
 }
 
-.movie-wrapper img {
-    transition: width .5s, height .5s, transform .5s;
-    display: table-row;
+.movie-wrapper:hover {
+    transform: scale(1.2);
 }
 
-.movie-wrapper img:hover {
-    transform: scale(1.15);
+.temp {
+    width: 100%;
+    height: 100%;
+    transition: background-color .4s, opacity .4s;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-/*.movie-wrapper img:hover {
-    transform: scale(1.1);
-}*/
+.temp:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .95);
+    color: white;
+}
+
+.moviet {
+    border-bottom: 1px solid rgb(45, 45, 45);
+    width: 100%;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;   
+}

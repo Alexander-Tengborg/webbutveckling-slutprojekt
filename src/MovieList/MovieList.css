@@ -1,15 +1,17 @@
 .category-title {
+    padding-left: 20px;
     color: #f2f2f2;
 }
 
 .movie-list {
     display: flex;
+    align-items: center;
     overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     position: relative;
     clear: both;
-    height: 375px;
+    height: 360px;
 }
 
 .movie-list::-webkit-scrollbar {
@@ -18,7 +20,7 @@
 
 .scroll-left, .scroll-right {
     width: 65px;
-    height: 100%;
+    height: 300px;
     position: absolute;
     background-color: rgba(0, 0, 0, .2);
     outline: none;
@@ -27,19 +29,22 @@
     cursor: pointer;
 }
 
-.scroll-left img, .scroll-right img {
-    width: 100%;
-    pointer-events: none;
+@media screen and (max-width: 500px) {
+    .scroll-left, .scroll-right {
+        visibility: hidden;
+    }
 }
 
-.scroll-left:hover, .scroll-right:hover {
-    transform: scale(1.4);
+.scroll-left svg, .scroll-right svg {
+    width: 100%;
+    pointer-events: none;
 }
 
 .scroll-left {
     float: left;
     left: 0;
     z-index: 1;
+    visibility: hidden;
 }
 
 .scroll-right {

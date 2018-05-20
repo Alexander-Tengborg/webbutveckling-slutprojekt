@@ -12,8 +12,8 @@ class MovieList extends Component {
         this.state = {
             movies: []
         }
-
         this.getMovies();
+
     }
 
     getMovies() {
@@ -27,34 +27,40 @@ class MovieList extends Component {
     onClick(t, e) {
         let newScroll = 0;
         let parent = e.target.parentElement;
-        console.log(e.target.parentElement.clientWidth);
-        if(t == 'r')  {
-            if(parent.scrollWidth - (parent.scrollLeft + parent.clientWidth) > 40) {
-                newScroll += e.target.parentElement.clientWidth;
-            }
 
-            //console.log("right: ", newScroll);
+        if(t == 'r')  {
+            if(parent.scrollLeft <= (parent.scrollWidth - parent.offsetWidth - 13)) { // if it is scrolled all the way to the right. why 13??
+                newScroll += parent.clientWidth;
+            }
         } else {
             newScroll -= parent.clientWidth;
-            //console.log("left: ", newScroll);
         }
-        e.target.parentElement.scrollBy({left: newScroll, behavior: 'smooth'})
-        console.log("newscroll", newScroll);
-        console.log("outerwidth", window.outerWidth);
-        console.log("scrollLeft", e.target.parentElement.scrollLeft);
-        console.log("scrollwidth:", e.target.parentElement.scrollWidth);
-        console.log("element.width", e.target.parentElement.style.height);
-        console.log("---");
-        //e.target.parentElement.scrollLeft += window.outerWidth;
+        parent.scrollBy({left: newScroll, behavior: 'smooth'})
+
     }
 
     onScroll(e) {
+        console.log("scroll");
         let elements = e.target.children;
         //console.log(elements);
         for(let i = 0; i < elements.length; i++) {
             if(elements[i].tagName.toLowerCase() == "button") {
-                if(elements[i].getAttribute("left")) elements[i].style.left = e.target.scrollLeft + 'px';
-                if(elements[i].getAttribute("right")) elements[i].style.right = -e.target.scrollLeft + 'px';
+                let element = elements[i];
+                if(element.getAttribute("left")) {
+                    element.style.left = e.target.scrollLeft + 'px';
+                    if(e.target.scrollLeft == 0) {
+                        element.style.visibility = "hidden";
+                    } else {
+                        element.style.visibility = "visible";
+                    }
+                } else if(element.getAttribute("right")) {
+                    element.style.right = -e.target.scrollLeft + 'px';
+                    if(e.target.scrollLeft >= (e.target.scrollWidth - e.target.offsetWidth - 13)) {
+                        element.style.visibility = "hidden";
+                    } else {
+                        element.style.visibility = "visible";
+                    }
+                }
             }
         }
         //console.log(e.target.scrollLeft);
@@ -64,28 +70,26 @@ class MovieList extends Component {
         let movieList = "Could not load movies";
 
         if(this.state.movies.results) {
-            if(this.props.type == "top_rated") {
-                movieList = this.state.movies.results.map(data =>
-                    <Movie key={data.id} data={data}/>
-                )          
-            } else if(this.props.type == "popular") {
-                movieList = this.state.movies.results.map(data =>
-                    <Movie2 key={data.id} data={data}/>
-                )
-            } else {
-                movieList = this.state.movies.results.map(data =>
-                    <Movie3 key={data.id} data={data}/>
-                )
-            }
+            movieList = this.state.movies.results.map(data =>
+                <Movie key={data.id} data={data}/>
+            )          
         }
 
         return (
             <div>
                 <h1 className="category-title">{this.props.title}</h1>
                 <div className="movie-list" onScroll={this.onScroll}>
-                    <button className="scroll-left" onClick={(e) => this.onClick("l", e)} left="true"><img src="left.png" /></button>
+                    <button className="scroll-left" onClick={(e) => this.onClick("l", e)} left="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 20">
+                            <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" fill="#f2f2f2" transform="translate(20, 0) scale(-1, 1)"/>
+                        </svg>
+                    </button>
                         {movieList}
-                    <button className="scroll-right" onClick={(e) => this.onClick("r", e)} right="true"><img src="right.png" /></button>
+                    <button className="scroll-right" onClick={(e) => this.onClick("r", e)} right="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 20">
+                            <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" fill="#f2f2f2"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         );
