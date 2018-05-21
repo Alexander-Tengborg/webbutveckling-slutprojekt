@@ -30,7 +30,9 @@ class App extends Component {
   }
 
 
-  hideModal() {
+  hideModal(event) {
+    console.log(event.target);
+    if(event.target != event.currentTarget) return;
     let wrapper = document.getElementById("modal-wrapper");
     let modal = document.getElementById("movie-modal");
 

@@ -15,7 +15,6 @@ class MovieModal extends Component {
 
     componentDidUpdate(prevProps) {
         if(prevProps.curMovie != this.props.curMovie) {
-            console.log("update");
             this.getMovieDetails();
         }
     }
